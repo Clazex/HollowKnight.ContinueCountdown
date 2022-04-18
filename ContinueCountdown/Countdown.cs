@@ -9,15 +9,20 @@ public sealed partial class ContinueCountdown {
 	private TextObject? text = null;
 
 	private IEnumerator DoCountdown(On.GameManager.orig_PauseGameToggle orig, GameManager self) {
+		if (CountingDown) {
+			yield break;
+		}
+
+		UIManager ui = self.ui;
+		InputHandler ih = InputHandler.Instance;
+
 		if (!self.TimeSlowed // From original method
 			&& self.gameState == GameState.PAUSED // is un-pausing
-			&& !InputHandler.Instance.inputActions.pause.WasPressed // not via Esc
+			&& !ih.inputActions.pause.WasPressed // not via Esc
 		) {
-			UIManager ui = self.ui;
-
 			// Break UIManager#SetState & UIManager#UIClosePauseMenu method into parts
 			ui.uiState = UIState.PLAYING;
-			InputHandler.Instance.StopUIInput();
+			ih.StopUIInput();
 			ui.StartCoroutine(ui.HideCurrentMenu());
 
 			CountingDown = true;
