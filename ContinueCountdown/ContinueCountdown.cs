@@ -22,8 +22,9 @@ public sealed partial class ContinueCountdown : Mod, ITogglableMod {
 
 		Instance = this;
 
-		layout = new(true, "ContinueCountdown LayoutRoot");
-		layout.VisibilityCondition = IsCountingDown;
+		layout = new(true, "ContinueCountdown LayoutRoot") {
+			VisibilityCondition = IsCountingDown
+		};
 		layout.Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
 		text = new(layout, "Countdown Number") {

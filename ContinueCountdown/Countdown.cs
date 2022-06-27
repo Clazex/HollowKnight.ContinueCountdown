@@ -23,7 +23,7 @@ public sealed partial class ContinueCountdown {
 			// Break UIManager#SetState & UIManager#UIClosePauseMenu method into parts
 			ui.uiState = UIState.PLAYING;
 			ih.StopUIInput();
-			ui.StartCoroutine(ui.HideCurrentMenu());
+			_ = ui.StartCoroutine(ui.HideCurrentMenu());
 
 			CountingDown = true;
 			LogDebug("Starting countdown");
